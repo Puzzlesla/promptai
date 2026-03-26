@@ -1,0 +1,321 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 700" width="500" height="700">
+  <defs>
+    <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#5a3a1a"/>
+      <stop offset="50%" style="stop-color:#8B5E3C"/>
+      <stop offset="100%" style="stop-color:#4a2e10"/>
+    </linearGradient>
+    <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6b4423"/>
+      <stop offset="100%" style="stop-color:#8B5E3C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Ground shadow -->
+  <ellipse cx="250" cy="685" rx="90" ry="10" fill="#c8a0b0" opacity="0.3"/>
+
+  <!-- Main trunk -->
+  <path d="M220 690 Q215 620 210 560 Q208 520 218 480 Q225 450 230 420" fill="url(#trunkGrad)" stroke="#4a2e10" stroke-width="1"/>
+  <path d="M280 690 Q285 620 288 560 Q290 520 280 480 Q272 450 268 420" fill="url(#trunkGrad)" stroke="#4a2e10" stroke-width="1"/>
+  <path d="M220 690 Q215 620 210 560 Q208 520 218 480 Q225 450 230 420 Q248 410 268 420 Q272 450 280 480 Q290 520 288 560 Q285 620 280 690 Z" fill="url(#trunkGrad)" stroke="#4a2e10" stroke-width="0.5"/>
+
+  <!-- Trunk texture lines -->
+  <path d="M235 650 Q240 630 238 610" fill="none" stroke="#4a2e10" stroke-width="1" opacity="0.4"/>
+  <path d="M255 670 Q258 645 256 620" fill="none" stroke="#4a2e10" stroke-width="1" opacity="0.3"/>
+  <path d="M242 580 Q245 560 243 540" fill="none" stroke="#4a2e10" stroke-width="0.8" opacity="0.35"/>
+
+  <!-- Main left branch -->
+  <path d="M225 480 Q190 450 155 410 Q130 380 110 350" fill="none" stroke="url(#branchGrad)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M225 480 Q190 450 155 410 Q130 380 110 350" fill="none" stroke="#4a2e10" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Main right branch -->
+  <path d="M265 470 Q300 440 335 400 Q360 370 380 340" fill="none" stroke="url(#branchGrad)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M265 470 Q300 440 335 400 Q360 370 380 340" fill="none" stroke="#4a2e10" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Center branch going up -->
+  <path d="M248 430 Q245 390 240 350 Q237 320 235 285" fill="none" stroke="url(#branchGrad)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Sub-branches left -->
+  <path d="M155 410 Q130 385 105 370 Q85 358 65 350" fill="none" stroke="#7a4e2a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M130 390 Q110 360 95 330 Q82 305 75 280" fill="none" stroke="#7a4e2a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M110 350 Q90 320 80 290 Q72 265 70 240" fill="none" stroke="#7a4e2a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M65 350 Q45 330 30 305 Q18 285 15 260" fill="none" stroke="#8a5a30" stroke-width="5" stroke-linecap="round"/>
+  <path d="M75 280 Q60 255 50 225 Q42 200 40 175" fill="none" stroke="#8a5a30" stroke-width="4" stroke-linecap="round"/>
+  <path d="M70 240 Q55 215 48 185 Q42 160 45 135" fill="none" stroke="#8a5a30" stroke-width="4" stroke-linecap="round"/>
+  <path d="M130 390 Q115 410 100 425 Q85 435 65 440" fill="none" stroke="#7a4e2a" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Sub-branches right -->
+  <path d="M335 400 Q360 375 385 360 Q405 348 425 340" fill="none" stroke="#7a4e2a" stroke-width="8" stroke-linecap="round"/>
+  <path d="M360 375 Q380 345 395 315 Q408 290 415 265" fill="none" stroke="#7a4e2a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M380 340 Q400 310 415 280 Q425 255 428 228" fill="none" stroke="#7a4e2a" stroke-width="6" stroke-linecap="round"/>
+  <path d="M425 340 Q445 320 458 295 Q468 275 470 250" fill="none" stroke="#8a5a30" stroke-width="5" stroke-linecap="round"/>
+  <path d="M415 265 Q430 240 440 210 Q448 185 448 160" fill="none" stroke="#8a5a30" stroke-width="4" stroke-linecap="round"/>
+  <path d="M428 228 Q440 200 448 170 Q454 145 452 118" fill="none" stroke="#8a5a30" stroke-width="4" stroke-linecap="round"/>
+  <path d="M360 375 Q345 395 335 415 Q322 432 310 445" fill="none" stroke="#7a4e2a" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Center sub-branches -->
+  <path d="M240 350 Q215 325 195 300 Q178 278 168 255" fill="none" stroke="#7a4e2a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M238 320 Q262 295 278 268 Q290 245 295 220" fill="none" stroke="#7a4e2a" stroke-width="7" stroke-linecap="round"/>
+  <path d="M235 285 Q218 260 205 232 Q195 208 193 183" fill="none" stroke="#8a5a30" stroke-width="5" stroke-linecap="round"/>
+  <path d="M235 285 Q252 258 265 228 Q275 203 278 175" fill="none" stroke="#8a5a30" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Tiny terminal branches -->
+  <path d="M65 350 Q50 345 35 355" fill="none" stroke="#9a6a3a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M15 260 Q5 248 2 232" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M40 175 Q28 160 22 143" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M45 135 Q35 118 30 100" fill="none" stroke="#9a6a3a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M470 250 Q482 235 485 218" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M448 160 Q458 143 462 125" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M452 118 Q460 100 458 82" fill="none" stroke="#9a6a3a" stroke-width="2" stroke-linecap="round"/>
+  <path d="M168 255 Q155 240 148 222" fill="none" stroke="#9a6a3a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M193 183 Q183 165 180 145" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M278 175 Q285 158 283 140" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M295 220 Q305 200 308 180" fill="none" stroke="#9a6a3a" stroke-width="3" stroke-linecap="round"/>
+  <path d="M65 440 Q48 448 32 445" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M310 445 Q325 455 338 450" fill="none" stroke="#9a6a3a" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- BLOSSOM CLUSTERS -->
+  <!-- Far left lower cluster -->
+  <g opacity="0.95">
+    <circle cx="52" cy="348" r="22" fill="#f9c8d8"/>
+    <circle cx="35" cy="358" r="18" fill="#f7b8cc"/>
+    <circle cx="20" cy="345" r="16" fill="#fad4e4"/>
+    <circle cx="40" cy="332" r="20" fill="#f9c0d4"/>
+    <circle cx="62" cy="333" r="17" fill="#fbd8e8"/>
+    <circle cx="25" cy="330" r="14" fill="#f7b8cc"/>
+  </g>
+
+  <!-- Left branch end cluster -->
+  <g opacity="0.95">
+    <circle cx="110" cy="352" r="24" fill="#fac8dc"/>
+    <circle cx="90" cy="342" r="20" fill="#f9b8d0"/>
+    <circle cx="75" cy="358" r="18" fill="#fbd0e4"/>
+    <circle cx="95" cy="368" r="16" fill="#f9c4d8"/>
+    <circle cx="118" cy="368" r="15" fill="#fad0e2"/>
+    <circle cx="82" cy="328" r="17" fill="#f8b4cc"/>
+  </g>
+
+  <!-- Left mid cluster -->
+  <g opacity="0.92">
+    <circle cx="78" cy="285" r="22" fill="#fbd4e6"/>
+    <circle cx="60" cy="278" r="18" fill="#f9c0d8"/>
+    <circle cx="50" cy="295" r="16" fill="#fac8de"/>
+    <circle cx="68" cy="302" r="15" fill="#f9c4dc"/>
+    <circle cx="90" cy="298" r="14" fill="#fbd2e4"/>
+    <circle cx="55" cy="265" r="17" fill="#f8bcda"/>
+  </g>
+
+  <!-- Far left upper cluster -->
+  <g opacity="0.92">
+    <circle cx="42" cy="178" r="20" fill="#fccce2"/>
+    <circle cx="25" cy="170" r="16" fill="#fbc0da"/>
+    <circle cx="18" cy="185" r="14" fill="#fdd0e6"/>
+    <circle cx="35" cy="194" r="15" fill="#fbc8de"/>
+    <circle cx="55" cy="188" r="14" fill="#fcd4e4"/>
+    <circle cx="30" cy="160" r="13" fill="#fbbcd8"/>
+    <circle cx="50" cy="162" r="12" fill="#fcc8e0"/>
+  </g>
+
+  <!-- Very far left tiny cluster -->
+  <g opacity="0.88">
+    <circle cx="22" cy="232" r="18" fill="#fdd4e8"/>
+    <circle cx="8" cy="225" r="14" fill="#fcc8e2"/>
+    <circle cx="5" cy="240" r="12" fill="#fdd0e6"/>
+    <circle cx="18" cy="248" r="13" fill="#fccce4"/>
+    <circle cx="32" cy="242" r="12" fill="#fdd4e8"/>
+  </g>
+
+  <!-- Left lower hanging -->
+  <g opacity="0.9">
+    <circle cx="100" cy="430" r="20" fill="#fac8dc"/>
+    <circle cx="82" cy="440" r="17" fill="#f9bcd4"/>
+    <circle cx="65" cy="445" r="16" fill="#fbd0e2"/>
+    <circle cx="55" cy="432" r="14" fill="#fac4d8"/>
+    <circle cx="78" cy="420" r="15" fill="#fbd2e4"/>
+    <circle cx="112" cy="444" r="13" fill="#fac8de"/>
+  </g>
+
+  <!-- Center upper left cluster -->
+  <g opacity="0.93">
+    <circle cx="172" cy="258" r="23" fill="#f9c0d6"/>
+    <circle cx="153" cy="250" r="19" fill="#f8b4cc"/>
+    <circle cx="145" cy="268" r="17" fill="#fac8dc"/>
+    <circle cx="162" cy="278" r="16" fill="#f9bcd4"/>
+    <circle cx="182" cy="272" r="15" fill="#fbc4da"/>
+    <circle cx="158" cy="240" r="16" fill="#f8b8d0"/>
+    <circle cx="188" cy="250" r="14" fill="#fabcd2"/>
+  </g>
+
+  <!-- Center upper right cluster -->
+  <g opacity="0.93">
+    <circle cx="295" cy="224" r="23" fill="#fbc8de"/>
+    <circle cx="312" cy="215" r="19" fill="#faccd8"/>  
+    <circle cx="318" cy="232" r="17" fill="#fcd4e2"/>
+    <circle cx="306" cy="244" r="16" fill="#fbcee0"/>
+    <circle cx="283" cy="236" r="15" fill="#fac8dc"/>
+    <circle cx="310" cy="203" r="16" fill="#fbc4d8"/>
+    <circle cx="278" cy="218" r="14" fill="#fac0d4"/>
+  </g>
+
+  <!-- Center top left -->
+  <g opacity="0.90">
+    <circle cx="188" cy="185" r="20" fill="#fdd2e8"/>
+    <circle cx="170" cy="178" r="17" fill="#fcc8e2"/>
+    <circle cx="165" cy="195" r="15" fill="#fdd0e6"/>
+    <circle cx="180" cy="205" r="14" fill="#fccce4"/>
+    <circle cx="200" cy="198" r="14" fill="#fdd4e8"/>
+    <circle cx="178" cy="168" r="14" fill="#fcc4e0"/>
+  </g>
+
+  <!-- Center top right -->
+  <g opacity="0.90">
+    <circle cx="278" cy="178" r="20" fill="#fbd0e4"/>
+    <circle cx="295" cy="170" r="17" fill="#facc de"/>
+    <circle cx="300" cy="187" r="15" fill="#fcd4e8"/>
+    <circle cx="288" cy="200" r="14" fill="#fbcee2"/>
+    <circle cx="268" cy="192" r="14" fill="#fac8de"/>
+    <circle cx="293" cy="160" r="14" fill="#fbc8dc"/>
+  </g>
+
+  <!-- Center very top -->
+  <g opacity="0.88">
+    <circle cx="238" cy="148" r="20" fill="#fdd4ea"/>
+    <circle cx="220" cy="140" r="16" fill="#fcc8e4"/>
+    <circle cx="215" cy="158" r="14" fill="#fdd2e8"/>
+    <circle cx="232" cy="168" r="13" fill="#fccee6"/>
+    <circle cx="252" cy="162" r="13" fill="#fdd4e8"/>
+    <circle cx="255" cy="145" r="14" fill="#fcc8e2"/>
+    <circle cx="237" cy="132" r="13" fill="#fdd0e6"/>
+  </g>
+
+  <!-- Right branch end cluster -->
+  <g opacity="0.95">
+    <circle cx="388" cy="343" r="24" fill="#fac8dc"/>
+    <circle cx="408" cy="333" r="20" fill="#f9bcd0"/>
+    <circle cx="420" cy="348" r="18" fill="#fbd0e4"/>
+    <circle cx="405" cy="360" r="16" fill="#f9c4d8"/>
+    <circle cx="382" cy="358" r="15" fill="#fad0e2"/>
+    <circle cx="418" cy="322" r="17" fill="#f8b8cc"/>
+  </g>
+
+  <!-- Right mid upper cluster -->
+  <g opacity="0.92">
+    <circle cx="418" cy="268" r="22" fill="#fbd2e6"/>
+    <circle cx="438" cy="258" r="18" fill="#fac4dc"/>
+    <circle cx="448" cy="275" r="16" fill="#fccee4"/>
+    <circle cx="435" cy="288" r="15" fill="#fbcae0"/>
+    <circle cx="415" cy="283" r="14" fill="#fad0e4"/>
+    <circle cx="440" cy="248" r="17" fill="#fac0d8"/>
+  </g>
+
+  <!-- Far right upper cluster -->
+  <g opacity="0.92">
+    <circle cx="450" cy="162" r="20" fill="#fccce2"/>
+    <circle cx="468" cy="153" r="16" fill="#fbc0d8"/>
+    <circle cx="474" cy="170" r="14" fill="#fdd0e6"/>
+    <circle cx="462" cy="182" r="15" fill="#fbc8de"/>
+    <circle cx="442" cy="174" r="14" fill="#fcd2e2"/>
+    <circle cx="466" cy="143" r="13" fill="#fbbcd6"/>
+    <circle cx="446" cy="146" r="12" fill="#fcc4dc"/>
+  </g>
+
+  <!-- Very far right tiny cluster -->
+  <g opacity="0.88">
+    <circle cx="472" cy="222" r="18" fill="#fdd2e8"/>
+    <circle cx="488" cy="215" r="14" fill="#fcc6e0"/>
+    <circle cx="492" cy="232" r="12" fill="#fdd0e6"/>
+    <circle cx="478" cy="242" r="13" fill="#fccae2"/>
+    <circle cx="462" cy="236" r="12" fill="#fdd4e8"/>
+  </g>
+
+  <!-- Right lower hanging -->
+  <g opacity="0.9">
+    <circle cx="395" cy="432" r="20" fill="#fac4d8"/>
+    <circle cx="412" cy="442" r="17" fill="#f9bcd0"/>
+    <circle cx="428" cy="447" r="16" fill="#fbd0e2"/>
+    <circle cx="438" cy="435" r="14" fill="#f9c0d4"/>
+    <circle cx="415" cy="418" r="15" fill="#fbcee0"/>
+    <circle cx="380" cy="440" r="13" fill="#fac4d8"/>
+  </g>
+
+  <!-- Right hanging lower -->
+  <g opacity="0.9">
+    <circle cx="308" cy="450" r="20" fill="#fbc8de"/>
+    <circle cx="325" cy="460" r="17" fill="#faccd8"/>
+    <circle cx="340" cy="455" r="15" fill="#fcd0e2"/>
+    <circle cx="325" cy="440" r="14" fill="#fbcade"/>
+    <circle cx="300" cy="462" r="13" fill="#fac4d8"/>
+  </g>
+
+  <!-- Fallen petals on ground -->
+  <ellipse cx="185" cy="688" rx="6" ry="3" fill="#fac8dc" opacity="0.6" transform="rotate(-15 185 688)"/>
+  <ellipse cx="210" cy="692" rx="5" ry="2.5" fill="#f9bcd4" opacity="0.5" transform="rotate(10 210 692)"/>
+  <ellipse cx="265" cy="690" rx="5" ry="2.5" fill="#fbd0e4" opacity="0.55" transform="rotate(-8 265 690)"/>
+  <ellipse cx="300" cy="688" rx="6" ry="3" fill="#f9c4d8" opacity="0.5" transform="rotate(20 300 688)"/>
+  <ellipse cx="155" cy="694" rx="4" ry="2" fill="#fac0d4" opacity="0.45" transform="rotate(5 155 694)"/>
+  <ellipse cx="330" cy="692" rx="4" ry="2" fill="#fbd2e4" opacity="0.45" transform="rotate(-12 330 692)"/>
+
+  <!-- Floating petals -->
+  <ellipse cx="140" cy="320" rx="5" ry="2.5" fill="#fac8dc" opacity="0.55" transform="rotate(25 140 320)"/>
+  <ellipse cx="350" cy="280" rx="4" ry="2" fill="#f9bcd4" opacity="0.5" transform="rotate(-20 350 280)"/>
+  <ellipse cx="200" cy="480" rx="5" ry="2.5" fill="#fbd0e4" opacity="0.45" transform="rotate(15 200 480)"/>
+  <ellipse cx="320" cy="380" rx="4" ry="2" fill="#fac4d8" opacity="0.5" transform="rotate(-30 320 380)"/>
+  <ellipse cx="95" cy="410" rx="4" ry="2" fill="#fbc8de" opacity="0.45" transform="rotate(10 95 410)"/>
+  <ellipse cx="420" cy="300" rx="5" ry="2.5" fill="#f9c0d4" opacity="0.5" transform="rotate(-15 420 300)"/>
+
+  <!-- Individual flower details on key clusters - 5-petal flowers -->
+  <!-- A few detailed blossoms overlaid on clusters -->
+  <g transform="translate(108,350)">
+    <circle cx="0" cy="-7" r="4.5" fill="#fff0f5"/>
+    <circle cx="6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2.5" fill="#f8a0b8"/>
+  </g>
+
+  <g transform="translate(240,148)">
+    <circle cx="0" cy="-7" r="4.5" fill="#fff0f5"/>
+    <circle cx="6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2.5" fill="#f8a0b8"/>
+  </g>
+
+  <g transform="translate(390,342)">
+    <circle cx="0" cy="-7" r="4.5" fill="#fff0f5"/>
+    <circle cx="6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-4.1" cy="5.8" r="4.5" fill="#fff0f5"/>
+    <circle cx="-6.6" cy="-2.2" r="4.5" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2.5" fill="#f8a0b8"/>
+  </g>
+
+  <g transform="translate(52,345)">
+    <circle cx="0" cy="-6" r="4" fill="#fff0f5"/>
+    <circle cx="5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2" fill="#f8a0b8"/>
+  </g>
+
+  <g transform="translate(172,256)">
+    <circle cx="0" cy="-6" r="4" fill="#fff0f5"/>
+    <circle cx="5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2" fill="#f8a0b8"/>
+  </g>
+
+  <g transform="translate(298,222)">
+    <circle cx="0" cy="-6" r="4" fill="#fff0f5"/>
+    <circle cx="5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-3.5" cy="5" r="4" fill="#fff0f5"/>
+    <circle cx="-5.7" cy="-1.9" r="4" fill="#fff0f5"/>
+    <circle cx="0" cy="0" r="2" fill="#f8a0b8"/>
+  </g>
+</svg>

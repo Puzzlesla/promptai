@@ -1,0 +1,62 @@
+<svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for added depth -->
+    <linearGradient id="trunkGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3A2726"/>
+      <stop offset="50%" stop-color="#5C403E"/>
+      <stop offset="100%" stop-color="#3A2726"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Trunk and Main Branches -->
+  <g id="tree-trunk">
+    <path d="M 230 480 Q 245 350 230 250 Q 180 200 120 180 Q 160 220 235 230 Q 250 150 250 100 Q 265 180 260 220 Q 320 170 380 150 Q 330 200 270 240 Q 275 350 270 480 Z" fill="url(#trunkGrad)"/>
+    <path d="M 235 230 Q 200 160 160 130" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M 260 220 Q 300 140 340 120" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Background Blossoms (Shadows) -->
+  <g id="blossoms-back" fill="#E08DA1" opacity="0.9">
+    <circle cx="150" cy="200" r="50"/>
+    <circle cx="350" cy="180" r="60"/>
+    <circle cx="250" cy="120" r="65"/>
+    <circle cx="180" cy="140" r="45"/>
+    <circle cx="310" cy="130" r="50"/>
+  </g>
+
+  <!-- Main Blossoms (Your Provided Pink Color) -->
+  <g id="blossoms-mid" fill="#F5A3B8">
+    <circle cx="200" cy="180" r="70"/>
+    <circle cx="300" cy="160" r="75"/>
+    <circle cx="250" cy="220" r="65"/>
+    <circle cx="160" cy="230" r="55"/>
+    <circle cx="340" cy="220" r="60"/>
+    <circle cx="250" cy="160" r="70"/>
+  </g>
+  
+  <!-- Foreground Blossoms (Highlights) -->
+  <g id="blossoms-front" fill="#FBD1DC" opacity="0.85">
+    <circle cx="180" cy="150" r="45"/>
+    <circle cx="280" cy="130" r="50"/>
+    <circle cx="230" cy="190" r="40"/>
+    <circle cx="320" cy="190" r="35"/>
+    <circle cx="140" cy="210" r="30"/>
+    <circle cx="260" cy="240" r="35"/>
+  </g>
+
+  <!-- Falling Petals -->
+  <g id="falling-petals">
+    <!-- Petal 1 -->
+    <path d="M 180 300 Q 185 305 180 310 Q 175 305 180 300" fill="#F5A3B8" transform="rotate(15 180 300)"/>
+    <!-- Petal 2 -->
+    <path d="M 320 280 Q 325 285 320 290 Q 315 285 320 280" fill="#F5A3B8" transform="rotate(-20 320 280)"/>
+    <!-- Petal 3 -->
+    <path d="M 280 350 Q 286 356 280 362 Q 274 356 280 350" fill="#FBD1DC" transform="rotate(45 280 350)"/>
+    <!-- Petal 4 -->
+    <path d="M 220 400 Q 225 405 220 410 Q 215 405 220 400" fill="#F5A3B8" transform="rotate(-10 220 400)"/>
+    <!-- Petal 5 -->
+    <path d="M 350 380 Q 355 385 350 390 Q 345 385 350 380" fill="#E08DA1" transform="rotate(30 350 380)"/>
+    <!-- Petal 6 -->
+    <path d="M 150 420 Q 156 426 150 432 Q 144 426 150 420" fill="#FBD1DC" transform="rotate(60 150 420)"/>
+  </g>
+</svg>

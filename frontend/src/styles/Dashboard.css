@@ -1,0 +1,201 @@
+/* src/styles/Dashboard.css */
+:root {
+  --bg: #efefef;
+  --pink-100: #f5dfe7;
+  --pink-200: #ebc3cf;
+  --pink-300: #e9a9bc;
+  --pink-500: #df7f98;
+  --text: #5f4b55;
+}
+
+.dash {
+  min-height: 100vh;
+  background: var(--bg);
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 24px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.dash__panel {
+  background: var(--pink-200);
+  border-radius: 22px;
+  padding: 18px 14px;
+  min-height: calc(100vh - 48px);
+}
+
+.dash__pill {
+  background: var(--pink-300);
+  color: #fff;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.dash__field {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.dash__topRight {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+}
+
+.dash__streak,
+.dash__avatar {
+  background: var(--pink-100);
+  border: 0;
+  border-radius: 16px;
+  min-height: 52px;
+  min-width: 72px;
+  padding: 10px 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dash__streak span {
+  font-size: 30px;
+  line-height: 1;
+  color: #f0909f;
+  font-weight: 700;
+}
+
+.dash__streak img {
+  width: 24px;
+  height: 24px;
+}
+
+.dash__avatar {
+  padding: 8px;
+  min-width: 52px;
+}
+
+.dash__avatar img {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+}
+
+.tree {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: sway 4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+
+.tree__sprite {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tree--small {
+  width: 118px;
+}
+
+.tree--medium {
+  width: 128px;
+}
+
+.tree--large {
+  width: 142px;
+}
+
+.tree__base {
+  width: 72px;
+  height: 18px;
+  margin: 4px auto 0;
+  background: var(--pink-300);
+  border-radius: 2px;
+  transform: skewX(-20deg);
+}
+
+.butterfly {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  opacity: 0.7;
+  animation: flutter 6s ease-in-out infinite;
+}
+
+.butterfly img {
+  width: 26px;
+  height: 26px;
+}
+
+.dash__dock {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+  background: var(--pink-100);
+  border-radius: 18px;
+  display: flex;
+  gap: 12px;
+  padding: 10px 14px;
+  z-index: 3;
+}
+
+.dash__dock button {
+  border: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--pink-300);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash__dock button img {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes sway {
+  0%, 100% { transform: translate(-50%, -50%) rotate(-1deg); }
+  50% { transform: translate(-50%, -50%) rotate(1.3deg); }
+}
+
+@keyframes flutter {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-10px) translateX(6px); }
+}
+
+@media (max-width: 900px) {
+  .dash {
+    grid-template-columns: 1fr;
+  }
+  .dash__panel {
+    min-height: 120px;
+  }
+
+  .tree--small {
+    width: 94px;
+  }
+
+  .tree--medium {
+    width: 102px;
+  }
+
+  .tree--large {
+    width: 110px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tree, .butterfly {
+    animation: none;
+  }
+}
