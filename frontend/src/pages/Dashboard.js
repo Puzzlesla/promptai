@@ -22,14 +22,14 @@ const BUTTERFLIES = [
 ]
 
 const TREE_POSITIONS = [
-  { x: '26%', y: '6%',  size: 'sm' },
-  { x: '48%', y: '4%',  size: 'md' },
-  { x: '68%', y: '10%', size: 'sm' },
-  { x: '30%', y: '44%', size: 'lg' },
+  { x: '26%', y: '6%',  size: 'xl' },
+  { x: '48%', y: '4%',  size: 'xl' },
+  { x: '68%', y: '10%', size: 'xl' },
+  { x: '30%', y: '44%', size: 'xl' },
   { x: '56%', y: '36%', size: 'xl' },
-  { x: '78%', y: '52%', size: 'md' },
-  { x: '18%', y: '70%', size: 'sm' },
-  { x: '88%', y: '14%', size: 'sm' },
+  { x: '78%', y: '52%', size: 'xl' },
+  { x: '18%', y: '70%', size: 'xl' },
+  { x: '88%', y: '14%', size: 'xl' },
 ]
 
 function formatDate(isoStr) {
@@ -41,22 +41,21 @@ function formatDate(isoStr) {
 
 // Accepts optional `user` prop from DashboardOrBlank to skip re-resolving auth
 export default function Dashboard({ user: userProp }) {
-  const [projects, setProjects]      = useState([])
-  const [loading, setLoading]        = useState(true)
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
   const [hoveredProject, setHovered] = useState(null)
   const [userStreak, setUserStreak]  = useState(0)
-  const [user, setUser]              = useState(userProp ?? auth.currentUser)
+  const [user, setUser] = useState(userProp ?? auth.currentUser)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (userProp) return // already have user from parent
+    if (userProp) return 
     const unsub = auth.onAuthStateChanged((u) => setUser(u))
     return () => unsub()
   }, [userProp])
 
   useEffect(() => {
     if (!user) return
-    setLoading(true)
     const q = query(collection(db, 'projects'), where('userId', '==', user.uid))
     getDocs(q)
       .then((snapshot) => {
@@ -151,11 +150,6 @@ export default function Dashboard({ user: userProp }) {
 
         {loading ? (
           <div className='dash__loading'>Loading your forest…</div>
-        ) : projects.length === 0 ? (
-          <div className='dash__empty'>
-            <p>Your forest is empty.</p>
-            <p>Add a project to grow your first tree!</p>
-          </div>
         ) : (
           projects.map((project, i) => {
             const pos    = TREE_POSITIONS[i % TREE_POSITIONS.length]

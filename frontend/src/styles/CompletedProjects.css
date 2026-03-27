@@ -27,7 +27,7 @@
 .cp__sidebar {
   position: relative;
   z-index: 10;
-  width: 178px;
+  width: 190px;
   min-width: 160px;
   flex-shrink: 0;
   background: rgba(255, 182, 205, 0.38);
@@ -123,6 +123,20 @@
   height: 20px;
   background: rgba(200,80,120,0.25);
   flex-shrink: 0;
+}
+
+
+.cp__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #f4a0c0;
+  overflow: hidden;
+  background: #fde;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 2px 10px rgba(200,80,120,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* ── Project grid ── */
@@ -263,11 +277,7 @@
   padding-bottom: 80px;
 }
 
-/* ── Bottom dock nav ──
-   Reused from Dashboard — if Dashboard.css is globally imported
-   you don't need these. If CompletedProjects.css is standalone,
-   keep them here.
-── */
+/* ── Bottom dock nav── */
 .dash__dock {
   position: absolute;
   bottom: 24px;

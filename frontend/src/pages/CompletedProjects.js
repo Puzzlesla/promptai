@@ -2,10 +2,12 @@ import '../styles/CompletedProjects.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import '../styles/Dashboard.css'
 import { auth, db } from '../firebase.js'
+import { signOut } from 'firebase/auth'
 import BottomNav from '../components/BottomNav'
-import tree1      from '../assets/tree1.svg'
-import tree2      from '../assets/tree2.svg'
+import tree1 from '../assets/tree1.svg'
+import tree2 from '../assets/tree2.svg'
 
 const treeSprites = [tree1, tree2]
 
@@ -57,15 +59,27 @@ export default function CompletedProjects() {
 
   const navigate = useNavigate()
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth)
+      navigate('/', { replace: true })
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+  }
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged(u => setUser(u))
     return () => unsub()
+
+    
   }, [])
 
   // Fetch completed projects + daily_logs
   useEffect(() => {
     if (!user) return
+
+    
 
     async function load() {
       try {
@@ -97,10 +111,9 @@ export default function CompletedProjects() {
 
   const sidebarItems = [
     { label: 'Settings', path: '/dashboard/settings'},
-    { label: 'Account', path: '/dashboard/account'},
     { label: 'Statistics', path: '/dashboard/statistics'},
-    { label: 'Avatar', path: '/dashboard/avatar'       },
-    { label: 'Shop', path: '/dashboard/shop'       },
+    { label: 'Shop', path: '/dashboard/shop'},
+    { label: 'Sign Out', onClick: handleSignOut },
   ]
 
   return (
@@ -108,26 +121,34 @@ export default function CompletedProjects() {
 
       {/* ── Left sidebar ── */}
       <aside className='cp__sidebar'>
+        <div className='cp__avatar' aria-label='Profile'>
+              <img
+                src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.uid || 'PromptAI'}`}
+                alt='Profile avatar'
+              />
+          </div>
         {sidebarItems.map(item => (
           <button
             key={item.label}
             className='cp__sidebar-btn'
-            onClick={() => navigate(item.path)}
+            onClick={item.onClick || (() => navigate(item.path))}
           >
             {item.label}
           </button>
         ))}
+        
       </aside>
 
       {/* ── Main content ── */}
       <section className='cp__content'>
 
         {/* Stats banner */}
-        <div className='cp__banner'>
-          <div className='cp__stat'>
-            <span className='cp__stat-emoji'>🏆</span>
-            <span className='cp__stat-label'>Lifetime XP:</span>
-            <span className='cp__stat-value'>
+        
+          <div className='cp__banner'>
+            <div className='cp__stat'>
+              <span className='cp__stat-emoji'>🏆</span>
+              <span className='cp__stat-label'>Lifetime XP:</span>
+              <span className='cp__stat-value'>
               {loading ? '—' : lifetimeXP.toLocaleString()}
             </span>
           </div>
@@ -148,6 +169,7 @@ export default function CompletedProjects() {
             </span>
           </div>
         </div>
+        
 
         {/* Project grid */}
         {loading ? (
