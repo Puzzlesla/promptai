@@ -1,31 +1,68 @@
+/* ──────────────────────────────────────────
+   index.css - Global Styles & Themes
+────────────────────────────────────────── */
+
+/* 1. Master Control: Classic Theme (Default) */
 :root {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  /* Typography & Rendering (Kept from your original) */
+  font-family: 'Inter', 'Nunito', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #1a1a1a;
-  background-color: #ffffff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Theme Variables: Classic Pink/Cream */
+  --bg-color: #fce8ee;
+  --text-main: #9b2145;
+  --text-muted: #c07090;
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --accent-color: #f497a9;
+  --link-color: #646cff;
+  --link-hover: #535bf2;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+/* 2. Master Control: Cyberpunk Theme */
+[data-theme='theme_cyberpunk'] {
+  --bg-color: #0d0d1a;
+  --text-main: #00e5ff;
+  --text-muted: #8892b0;
+  --card-bg: rgba(20, 20, 35, 0.85);
+  --accent-color: #ff007f;
+  --link-color: #00e5ff;
+  --link-hover: #ff007f;
 }
-a:hover {
-  color: #535bf2;
-}
+
+/* ──────────────────────────────────────────
+   Global HTML Elements
+────────────────────────────────────────── */
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  
+  /* Use the variables here! */
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  
+  /* Smoothly animate the colors when the user equips a new theme */
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
+}
+
+a {
+  font-weight: 500;
+  color: var(--link-color);
+  text-decoration: inherit;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
 }

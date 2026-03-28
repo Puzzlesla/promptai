@@ -6,6 +6,8 @@ import tree2 from '../assets/tree2.svg'
 import butterflyLight from '../assets/butterfly-light-green.svg'
 import butterflyLightRight from '../assets/butterfly-light-green-right.svg'
 import butterflyDark from '../assets/butterfly-dark-green.svg'
+import greenery from '../assets/greenery.png'
+import frameBase from '../assets/Frame.svg'        // ← base platform
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { collection, getDocs, query, where } from 'firebase/firestore'
@@ -39,17 +41,16 @@ function formatDate(isoStr) {
   })
 }
 
-// Accepts optional `user` prop from DashboardOrBlank to skip re-resolving auth
 export default function Dashboard({ user: userProp }) {
-  const [projects, setProjects] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [projects, setProjects]      = useState([])
+  const [loading, setLoading]        = useState(true)
   const [hoveredProject, setHovered] = useState(null)
   const [userStreak, setUserStreak]  = useState(0)
-  const [user, setUser] = useState(userProp ?? auth.currentUser)
+  const [user, setUser]              = useState(userProp ?? auth.currentUser)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (userProp) return 
+    if (userProp) return
     const unsub = auth.onAuthStateChanged((u) => setUser(u))
     return () => unsub()
   }, [userProp])
@@ -76,6 +77,7 @@ export default function Dashboard({ user: userProp }) {
 
       {/* ── Left side panel ── */}
       <aside className={`dash__panel ${hoveredProject ? 'dash__panel--active' : ''}`}>
+        <img src={greenery} alt='' className='dash__panel-greenery' />
         <div className='dash__pill'>Project Details</div>
 
         {hoveredProject && (
@@ -83,17 +85,17 @@ export default function Dashboard({ user: userProp }) {
             <h3 className='panel__title'>{hoveredProject.title}</h3>
 
             <div className='panel__row'>
-              <span className='panel__label'>Start Date:</span>
+              <span className='panel__label'>Start Date</span>
               <span>{formatDate(hoveredProject.metadata?.startDate)}</span>
             </div>
             <div className='panel__row'>
-              <span className='panel__label'>Due Date:</span>
+              <span className='panel__label'>Due Date</span>
               <span>{formatDate(hoveredProject.metadata?.endDate)}</span>
             </div>
 
             {hoveredProject.metadata?.tags?.length > 0 && (
               <div className='panel__tags-row'>
-                <span className='panel__label'>Tags:</span>
+                <span className='panel__label'>Tags</span>
                 <div className='panel__tags'>
                   {hoveredProject.metadata.tags.slice(0, 3).map(tag => (
                     <span key={tag} className='panel__tag'>{tag}</span>
@@ -103,7 +105,7 @@ export default function Dashboard({ user: userProp }) {
             )}
 
             <div className='panel__progress'>
-              <span className='panel__label'>Nodes completed:</span>
+              <span className='panel__label'>Nodes completed</span>
               <span className='panel__nodes'>
                 {hoveredProject.progress?.nodesCompleted ?? 0}
                 <span className='panel__nodes-total'>
@@ -142,14 +144,14 @@ export default function Dashboard({ user: userProp }) {
           </div>
           <button className='dash__avatar' aria-label='Profile'>
             <img
-              src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.uid || 'PromptAI'}`}
+              src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.uid || 'VINEA'}`}
               alt='Profile avatar'
             />
           </button>
         </header>
 
         {loading ? (
-          <div className='dash__loading'>Loading your forest…</div>
+          <div className='dash__loading'>Growing your forest…</div>
         ) : (
           projects.map((project, i) => {
             const pos    = TREE_POSITIONS[i % TREE_POSITIONS.length]
@@ -169,11 +171,23 @@ export default function Dashboard({ user: userProp }) {
                 aria-label={project.title || 'Project tree'}
                 onKeyDown={e => e.key === 'Enter' && navigate(`/treeview/${project.id}`)}
               >
+                {/* Floating tree sprite */}
                 <div className='tree__floater'>
                   <img className='tree__sprite' src={sprite} alt='' draggable={false} />
                 </div>
-                <div className='tree__base' />
-                {isHov && <div className='tree__label'>{project.title}</div>}
+
+                {/* ✅ Frame.svg as the isometric base — replaces the CSS div */}
+                <img
+                  className='tree__base'
+                  src={frameBase}
+                  alt=''
+                  draggable={false}
+                />
+
+                {/* ✅ Shows project.title (not description) in Cormorant font via CSS */}
+                {isHov && (
+                  <div className='tree__label'>{project.title}</div>
+                )}
               </div>
             )
           })

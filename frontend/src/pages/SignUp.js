@@ -2,7 +2,7 @@ import { auth, googleProvider } from '../firebase.js';
 import BottomNav from '../components/BottomNav'
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useState } from 'react';
-import logInTree from '../assets/logInTree.svg';
+import logo from '../assets/logo.png';
 import cherryBlossom from '../assets/cherryBlossomTree.svg';
 import { useNavigate } from 'react-router-dom';
 
@@ -65,8 +65,8 @@ const SignUp = () => {
                     margin: 24,
                 }}>
                     <img
-                        src={logInTree}
-                        alt="Sign Up Tree"
+                        src={logo}
+                        alt="Sign Up Logo"
                         style={{
                             width: 80,
                             height: 80,

@@ -1,5 +1,3 @@
 node_modules/
 *.local
 
-# Firebase Functions environment variables file
-.env

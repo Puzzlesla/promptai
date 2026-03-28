@@ -1,47 +1,55 @@
-
+/* ──────────────────────────────────────────
+   LogIn.css  –  PromptAI Forest Theme
+────────────────────────────────────────── */
 
 .login {
   min-height: 100vh;
   width: 100vw;
   display: flex;
-  flex-direction: row;
-  background: #fdf2f5;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
   position: relative;
   overflow: hidden;
 }
 
-/* ── Left panel (form) ── */
-.login__panel {
-  flex: 0 0 420px;
-  min-width: 320px;
-  max-width: 480px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 2;
-  background: rgba(252, 228, 236, 0.98);
-  box-shadow: 2px 0 24px 0 rgba(233, 169, 188, 0.10);
+/* ── Greenery pinned to top of page ── */
+.login__greenery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 550px;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.90;
 }
 
+/* ── Login card ── */
 .login__card {
+  position: relative;
+  z-index: 1;
   background: #fce4ec;
-  border-radius: 22px;
-  padding: 32px;
-  min-width: 320px;
-  width: 90%;
-  box-shadow: 0 2px 12px rgba(233, 169, 188, 0.3);
+  border-radius: 24px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 24px rgba(233, 169, 188, 0.28);
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 24px;
+  margin: 0 20px;
 }
 
 /* Tree logo */
 .login__logo {
-  width: 80px;
-  height: 80px;
-  border-radius: 22px;
-  margin-bottom: 16px;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  margin-bottom: 14px;
   background: #fce4ec;
   border: 3px solid #f48fb1;
   object-fit: contain;
@@ -49,7 +57,7 @@
 }
 
 .login__title {
-  color: #333;
+  color: #7a2040;
   font-size: 24px;
   font-weight: 900;
   margin: 0 0 24px;
@@ -63,7 +71,7 @@
   border-radius: 12px;
   border: 1px solid #f48fb1;
   width: 100%;
-  font-size: 16px;
+  font-size: 15px;
   font-family: inherit;
   box-sizing: border-box;
   outline: none;
@@ -93,97 +101,334 @@
   margin-bottom: 10px;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
+/* ──────────────────────────────────────────
+   LogIn.css  –  VINEA
+   Aesthetic direction: organic luxury —
+   soft botanicals, editorial type, 
+   refined cream + deep rose palette.
+────────────────────────────────────────── */
 
-.login__btn:hover {
-  transform: translateY(-2px);
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ── CSS variables ── */
+:root {
+  --cream:       #fdf8f4;
+  --petal:       #fce4ec;
+  --rose:        #f48fb1;
+  --deep-rose:   #c2185b;
+  --muted-rose:  #e8a0b8;
+  --ink:         #2c1a22;
+  --ink-muted:   #7a5060;
+  --border:      rgba(244, 143, 177, 0.28);
+  --shadow-soft: 0 8px 40px rgba(194, 24, 91, 0.10);
+  --shadow-card: 0 2px 0 rgba(194, 24, 91, 0.08),
+                 0 20px 60px rgba(194, 24, 91, 0.12);
 }
 
-.login__btn:active {
-  transform: scale(0.97);
+/* ── Page ── */
+.login {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cream);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Primary — Log in */
+/* Subtle warm grain texture overlay */
+.login::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.5;
+}
+
+/* ── Greenery ── */
+.login__greenery {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 260px;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+  /* gentle sway */
+  animation: sway 8s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(0deg)   scaleX(1); }
+  30%       { transform: rotate(0.4deg) scaleX(1.005); }
+  70%       { transform: rotate(-0.3deg) scaleX(0.997); }
+}
+
+/* ── Card — enters from below ── */
+.login__card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 28px;
+  padding: 48px 44px 44px;
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 20px;
+
+  /* entrance animation */
+  animation: card-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* ── Logo ── */
+.login__logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  object-fit: contain;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 12px rgba(194, 24, 91, 0.12);
+  animation: card-rise 0.7s 0.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Wordmark ── */
+.login__title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 38px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  color: #f48fb1;
+  margin: 0 0 6px;
+  animation: card-rise 0.7s 0.08s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login__tagline {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-rose);
+  margin: 0 0 32px;
+  animation: card-rise 0.7s 0.11s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Input wrapper (floating label style) ── */
+.login__field {
+  position: relative;
+  width: 100%;
+  margin-bottom: 14px;
+  animation: card-rise 0.7s 0.14s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login__field:last-of-type {
+  margin-bottom: 28px;
+}
+
+.login__label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background: transparent;
+  padding: 0 4px;
+}
+
+.login__input {
+  width: 100%;
+  padding: 14px 16px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(253, 248, 244, 0.7);
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.login__input::placeholder {
+  color: var(--ink-muted);
+  font-weight: 400;
+}
+
+.login__input:focus {
+  border-color: var(--rose);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(244, 143, 177, 0.15);
+}
+
+/* ── Divider ── */
+.login__divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  animation: card-rise 0.7s 0.20s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login__divider::before,
+.login__divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.login__divider-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted-rose);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Buttons ── */
+.login__btn {
+  width: 100%;
+  padding: 13px 24px;
+  border-radius: 14px;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.18s ease,
+              background 0.18s ease;
+  animation: card-rise 0.7s 0.17s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login__btn:last-child { margin-bottom: 0; }
+
+.login__btn:hover  { transform: translateY(-2px) scale(1.01); }
+.login__btn:active { transform: scale(0.97); }
+
+/* Primary */
 .login__btn--primary {
-  background: #f48fb1;
-  color: #fff;
-  box-shadow: 0 3px 10px rgba(244, 143, 177, 0.35);
+  background:  #f48fb1;
+  color: #ffffff;
 }
-
 .login__btn--primary:hover {
-  background: #f06090;
-  box-shadow: 0 6px 16px rgba(240, 96, 144, 0.35);
-}
-
-/* Secondary — Sign up */
-.login__btn--secondary {
-  background: #f8bbd0;
-  color: #7a2040;
-}
-
-.login__btn--secondary:hover {
-  background: #f4a8c4;
+  box-shadow: 0 8px 24px rgba(233, 30, 140, 0.38),
+              inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 /* Google */
 .login__btn--google {
   background: #fff;
-  color: #f48fb1;
-  border: 1.5px solid #f48fb1;
-  margin-bottom: 0;
+  color: var(--ink);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.login__btn--google:hover {
+  background: var(--cream);
+  border-color: var(--muted-rose);
 }
 
+/* Sign up — text link style */
+.login__signup-row {
+  margin-top: 20px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  color: #f48fb1;
+  text-align: center;
+  animation: card-rise 0.7s 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.login__signup-link {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 800;
+  color: #f06090;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease;
+}
+.login__signup-link:hover { color: #ad1457; }
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .login__card    { padding: 36px 24px 32px; border-radius: 22px; }
+  .login__title   { font-size: 32px; }
+  .login__greenery { max-height: 160px; }
+}
+.login__btn:last-child { margin-bottom: 0; }
+.login__btn:hover      { transform: translateY(-2px); }
+.login__btn:active     { transform: scale(0.97); }
+
+.login__btn--primary {
+  background: #f48fb1;
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(244, 143, 177, 0.35);
+}
+.login__btn--primary:hover {
+  background: #f48fb1;
+  box-shadow: 0 6px 16px rgba(240, 96, 144, 0.35);
+}
+
+.login__btn--secondary { 
+  background: #f8bbd0; 
+  color: #7a2040; 
+  margin-top: 10px;
+}
+.login__btn--secondary:hover { background: #f4a8c4; }
+
+.login__btn--google {
+  background: #ffffff;
+  color: #f48fb1;
+  border: 1.5px solid #f48fb1;
+}
 .login__btn--google:hover {
   background: #fff5f8;
   border-color: #f06090;
   color: #f06090;
 }
 
-/* ── Right panel (tree visual) ── */
-.login__visual {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  min-height: 100vh;
-  z-index: 1;
-}
-
-.login__tree {
-  width: min(70vw, 900px);
-  height: auto;
-  max-height: 95vh;
-  object-fit: contain;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: 0 auto;
-  pointer-events: none;
-  opacity: 0.98;
-  filter: drop-shadow(0 8px 32px rgba(233, 169, 188, 0.33));
-}
-
 /* ── Responsive ── */
-@media (max-width: 900px) {
-  .login {
-    flex-direction: column;
-  }
-
-  .login__panel {
-    flex: none;
-    max-width: 100vw;
-    min-width: 0;
-    width: 100vw;
-    box-shadow: none;
-  }
-
-  .login__visual {
-    min-height: 40vh;
-  }
-
-  .login__tree {
-    width: 100vw;
-    max-height: 40vh;
-  }
+@media (max-width: 480px) {
+  .login__card    { padding: 32px 24px; border-radius: 20px; }
+  .login__greenery { max-height: 120px; }
 }

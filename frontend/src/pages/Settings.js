@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../firebase'
 import { signOut } from 'firebase/auth'
@@ -6,8 +6,23 @@ import '../styles/Settings.css'
 
 export default function Settings() {
   const navigate = useNavigate()
-  const [isDarkMode, setIsDarkMode]       = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('appTheme') === 'dark'
+  })
+  
   const [aiPersonality, setAiPersonality] = useState('coach')
+
+  useEffect(() => {
+    if (isDarkMode) {
+      // Turn on dark mode
+      document.documentElement.setAttribute('data-theme', 'dark')
+      localStorage.setItem('appTheme', 'dark')
+    } else {
+      // Turn off dark mode (revert to default classic theme)
+      document.documentElement.removeAttribute('data-theme')
+      localStorage.setItem('appTheme', 'light')
+    }
+  }, [isDarkMode])
 
   const handleSignOut = async () => {
     try {

@@ -1,9 +1,7 @@
-
-
 .shop {
   min-height: 100dvh;
-  background: #fce8ee;
-  font-family: 'Nunito', 'Rounded Mplus 1c', sans-serif;
+  background: #fff;
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,18 +9,28 @@
   position: relative;
 }
 
-/* Ambient glow */
-.shop::before {
+/* Grain texture overlay — same as login */
+.shop::after {
   content: '';
   position: fixed;
   inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.45;
+}
+
+/* Soft cream radial warmth */
+.shop::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(ellipse 55% 45% at 75% 25%, rgba(255,255,255,0.42) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 35% at 15% 80%, rgba(252,200,220,0.28) 0%, transparent 60%);
+    radial-gradient(ellipse 65% 55% at 72% 48%, rgba(253,232,240,0.5) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 20% 85%, rgba(252,220,232,0.3) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
-
 .shop__inner {
   position: relative;
   z-index: 1;
@@ -450,4 +458,31 @@
     grid-template-columns: 1fr;
   }
   .shop__heading { font-size: 26px; }
+}
+
+/* ── Loading State ── */
+.shop__loading {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fce8ee;
+  font-family: 'Nunito', 'Rounded Mplus 1c', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #9b2145;
+  letter-spacing: 0.02em;
+  animation: pulse-loading 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-loading {
+  0%, 100% { 
+    opacity: 0.5; 
+    transform: scale(0.98); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.02); 
+    text-shadow: 0 0 12px rgba(244,151,169,0.5);
+  }
 }
