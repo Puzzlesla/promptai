@@ -1,5 +1,4 @@
 import '../styles/TreeView.css'
-import 'reactflow/dist/style.css'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
@@ -9,116 +8,158 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import { onAuthStateChanged } from 'firebase/auth'
-import ReactFlow, {
-  Background,
-  Controls,
-  MiniMap,
-  ReactFlowProvider,
-  useEdgesState,
-  useNodesState,
-  useReactFlow,
-} from 'reactflow'
 import { auth, db } from '../firebase.js'
 import BottomNav from '../components/BottomNav'
-import ActionableTaskNode from '../components/ActionableTaskNode.js'
-import { TreeViewActionsContext } from '../components/TreeViewActionsContext.js'
+import ProjectTreeCanvas from '../components/ProjectTreeCanvas.js'
 import {
   buildReactFlowState,
   extractFlowFromProject,
+  getLinearTaskOrder,
+  getNextTaskIndex,
+  getLastCompletedPrefixIndex,
+  canToggleTaskComplete,
 } from '../utils/projectFlowData.js'
 
-const nodeTypes = { actionableTask: ActionableTaskNode }
-
-function FitViewHelper({ nodeCount }) {
-  const { fitView } = useReactFlow()
-  useEffect(() => {
-    if (nodeCount > 0) {
-      const t = requestAnimationFrame(() => {
-        fitView({ padding: 0.25, duration: 280 })
-      })
-      return () => cancelAnimationFrame(t)
-    }
-  }, [nodeCount, fitView])
-  return null
-}
-
-function TreeViewFlow({ project, onToggleComplete }) {
+function TreeViewContent({ project, projectId, user, onBack }) {
   const navigate = useNavigate()
-  const { nodes: initialNodes, metadata } = buildReactFlowState(project)
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
-  const [edges, setEdges, onEdgesChange] = useEdgesState(
-    buildReactFlowState(project).edges
+  const { metadata } = buildReactFlowState(project)
+  const linearOrder = useMemo(() => {
+    const { nodes, edges } = extractFlowFromProject(project)
+    return getLinearTaskOrder(nodes, edges)
+  }, [project])
+
+  const completedIds = project.progress?.completedNodeIds ?? []
+  const nextIndex = getNextTaskIndex(linearOrder, completedIds)
+
+  const title =
+    metadata?.title || project.title || 'Project'
+
+  const handleToggleNode = useCallback(
+    async (nodeId) => {
+      const ids = project.progress?.completedNodeIds ?? []
+      const markComplete = !ids.includes(nodeId)
+      if (
+        !canToggleTaskComplete(linearOrder, ids, nodeId, markComplete)
+      ) {
+        return
+      }
+
+      let nextIds
+      if (markComplete) {
+        const ni = getNextTaskIndex(linearOrder, ids)
+        if (linearOrder[ni]?.id !== nodeId) return
+        nextIds = linearOrder.slice(0, ni + 1).map((n) => n.id)
+      } else {
+        const lastP = getLastCompletedPrefixIndex(linearOrder, ids)
+        if (linearOrder[lastP]?.id !== nodeId) return
+        nextIds = linearOrder.slice(0, lastP).map((n) => n.id)
+      }
+
+      try {
+        await updateDoc(doc(db, 'projects', projectId), {
+          'progress.completedNodeIds': nextIds,
+          'progress.nodesCompleted': nextIds.length,
+          updatedAt: serverTimestamp(),
+        })
+      } catch (e) {
+        console.error('TreeView update progress:', e)
+      }
+    },
+    [linearOrder, project, projectId]
   )
 
-  useEffect(() => {
-    const { nodes: n, edges: e } = buildReactFlowState(project)
-    setNodes(n)
-    setEdges(e)
-  }, [project, setNodes, setEdges])
-
-  const actionsValue = useMemo(
-    () => ({ onToggleComplete }),
-    [onToggleComplete]
+  const isNodeInteractive = useCallback(
+    (nodeId) => {
+      const ids = project.progress?.completedNodeIds ?? []
+      return (
+        canToggleTaskComplete(linearOrder, ids, nodeId, true) ||
+        canToggleTaskComplete(linearOrder, ids, nodeId, false)
+      )
+    },
+    [linearOrder, project]
   )
 
-  const assessment = metadata?.ai_assessment
+  const streak =
+    project.progress?.nodesCompleted ?? completedIds.length
 
   return (
-    <TreeViewActionsContext.Provider value={actionsValue}>
-      <div className="treeview-page__header">
+    <div className="treeview-shell">
+      <header className="treeview-shell__header">
         <button
           type="button"
-          className="treeview-page__back"
-          onClick={() => navigate(-1)}
+          className="treeview-shell__back"
+          onClick={() => (onBack ? onBack() : navigate(-1))}
         >
           ← Back
         </button>
-        <div className="treeview-page__title-block">
-          <h1 className="treeview-page__title">
-            {metadata?.title || project.title || 'Project roadmap'}
-          </h1>
-          {assessment && (
-            <p className="treeview-page__subtitle">{assessment}</p>
-          )}
-          <div className="treeview-page__progress">
-            Progress: {project.progress?.nodesCompleted ?? 0} /{' '}
-            {project.progress?.totalNodes ||
-              metadata?.total_nodes ||
-              initialNodes.length ||
-              '—'}{' '}
-            steps
-          </div>
-        </div>
-      </div>
-
-      <div className="treeview-page__flow">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          nodeTypes={nodeTypes}
-          fitView
-          minZoom={0.2}
-          maxZoom={1.5}
-          proOptions={{ hideAttribution: true }}
-        >
-          <FitViewHelper nodeCount={nodes.length} />
-          <Background color="#c5e3d0" gap={20} />
-          <Controls />
-          <MiniMap
-            nodeStrokeWidth={3}
-            zoomable
-            pannable
-            style={{ borderRadius: 8 }}
+        <div className="treeview-shell__title-pill">{title}</div>
+        <div className="treeview-shell__header-right">
+          <span className="treeview-shell__streak" title="Steps done this path">
+            {streak}
+            <span className="treeview-shell__streak-ico" aria-hidden>
+              🔥
+            </span>
+          </span>
+          <img
+            className="treeview-shell__avatar"
+            src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${user?.uid || 'PromptAI'}`}
+            alt=""
           />
-        </ReactFlow>
+        </div>
+      </header>
+
+      <div className="treeview-shell__body">
+        <aside className="treeview-sidebar">
+          <h2 className="treeview-sidebar__heading">To-dos</h2>
+          <p className="treeview-sidebar__hint">
+            Complete from the bottom up — one step at a time.
+          </p>
+          <ul className="treeview-sidebar__list">
+            {linearOrder.map((node, i) => {
+              const done = completedIds.includes(node.id)
+              const step = i + 1
+              const isNext = i === nextIndex && !done
+              const label = (node.data?.label || `Task ${step}`).slice(0, 80)
+              const canUse = isNodeInteractive(node.id)
+
+              return (
+                <li key={node.id} className="treeview-sidebar__item">
+                  <label
+                    className={`treeview-sidebar__row${done ? ' treeview-sidebar__row--done' : ''}${isNext ? ' treeview-sidebar__row--next' : ''}`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={done}
+                      disabled={!canUse}
+                      onChange={() => canUse && handleToggleNode(node.id)}
+                      className="treeview-sidebar__check"
+                    />
+                    <span className="treeview-sidebar__step">{step}.</span>
+                    <span className="treeview-sidebar__text">{label}</span>
+                  </label>
+                </li>
+              )
+            })}
+          </ul>
+        </aside>
+
+        <main className="treeview-main">
+          {metadata?.ai_assessment && (
+            <p className="treeview-main__blurb">{metadata.ai_assessment}</p>
+          )}
+          <ProjectTreeCanvas
+            linearTasks={linearOrder}
+            completedIds={completedIds}
+            nextIndex={nextIndex}
+            isNodeInteractive={isNodeInteractive}
+            onNodeActivate={handleToggleNode}
+          />
+        </main>
       </div>
-    </TreeViewActionsContext.Provider>
+    </div>
   )
 }
 
-/** Loads one project doc; remount via `key` when project or user changes so snapshot state resets without setState in effects. */
 function TreeViewForProject({ projectId, user }) {
   const [project, setProject] = useState(null)
   const [loadState, setLoadState] = useState('loading')
@@ -157,27 +198,6 @@ function TreeViewForProject({ projectId, user }) {
       }).catch(() => {})
     }
   }, [project, projectId, loadState])
-
-  const onToggleComplete = useCallback(
-    async (nodeId) => {
-      if (!project) return
-      const prev = project.progress?.completedNodeIds ?? []
-      const set = new Set(prev)
-      if (set.has(nodeId)) set.delete(nodeId)
-      else set.add(nodeId)
-      const completedNodeIds = [...set]
-      try {
-        await updateDoc(doc(db, 'projects', projectId), {
-          'progress.completedNodeIds': completedNodeIds,
-          'progress.nodesCompleted': completedNodeIds.length,
-          updatedAt: serverTimestamp(),
-        })
-      } catch (e) {
-        console.error('TreeView update progress:', e)
-      }
-    },
-    [project, projectId]
-  )
 
   if (loadState === 'loading') {
     return (
@@ -220,10 +240,9 @@ function TreeViewForProject({ projectId, user }) {
       </div>
     )
   }
+
   return (
-    <ReactFlowProvider>
-      <TreeViewFlow project={project} onToggleComplete={onToggleComplete} />
-    </ReactFlowProvider>
+    <TreeViewContent project={project} projectId={projectId} user={user} />
   )
 }
 
@@ -262,7 +281,7 @@ export default function TreeView() {
   }
 
   return (
-    <div className="treeview-page">
+    <div className="treeview-page treeview-page--mockup">
       {body}
       <BottomNav />
     </div>
