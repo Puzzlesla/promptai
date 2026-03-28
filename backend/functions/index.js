@@ -1,49 +1,36 @@
-/* global process */
-
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import { setGlobalOptions } from "firebase-functions";
-import { defineString } from "firebase-functions/params";
+import { defineSecret } from "firebase-functions/params";
 import { initializeApp } from "firebase-admin/app";
 import { getFirestore, FieldValue } from "firebase-admin/firestore";
 import OpenAI from "openai";
 
-const openAIKey = defineString("OPENAI_API_KEY");
+// 2. Define the secret
+const openAIKey = defineSecret("OPENAI_API_KEY");
 
 setGlobalOptions({ maxInstances: 10 });
-
 initializeApp();
-
 const db = getFirestore();
 
-/**
- * Deployed functions do not read `backend/functions/.env` unless you configure
- * env/params in Firebase or Cloud. Prefer: `firebase functions:secrets:set`
- * or set OPENAI_API_KEY in Cloud Run for this function, or define the param.
- */
-function getOpenAIKey() {
-    const fromEnv = process.env.OPENAI_API_KEY?.trim?.() ?? "";
-    const fromParam = openAIKey.value()?.trim?.() ?? "";
-    return fromEnv || fromParam;
-}
-
-
-export const generateProjectTree = onCall({}, async (request) => {
+// 3. Pass the secret into the onCall configuration block
+export const generateProjectTree = onCall({ secrets: [openAIKey] }, async (request) => {
     if (!request.auth) {
         console.warn("Unauthenticated request to generateProjectTree");
         throw new HttpsError("unauthenticated", "Please log in first!");
     }
 
-    const apiKey = getOpenAIKey();
+    // 4. Access the secret value directly
+    const apiKey = openAIKey.value();
+    
     if (!apiKey) {
-        console.error("generateProjectTree: OPENAI_API_KEY is missing (env + param empty)");
+        console.error("generateProjectTree: OPENAI_API_KEY is missing");
         throw new HttpsError(
             "failed-precondition",
-            "Server is missing OPENAI_API_KEY. Set it for Cloud Functions (Firebase params, secrets, or Cloud Run env) and redeploy."
+            "Server is missing OPENAI_API_KEY."
         );
     }
 
     const openai = new OpenAI({ apiKey });
-
     try {
     const { userPrompt, projectId } = request.data ?? {};
     if (!projectId || typeof projectId !== "string") {
