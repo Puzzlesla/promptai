@@ -7,10 +7,10 @@ import butterflyLight from '../assets/butterfly-light-green.svg'
 import butterflyLightRight from '../assets/butterfly-light-green-right.svg'
 import butterflyDark from '../assets/butterfly-dark-green.svg'
 import greenery from '../assets/greenery.png'
-import frameBase from '../assets/Frame.svg'        // ← base platform
+import frameBase from '../assets/Frame.svg'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { auth, db } from '../firebase.js'
 
 const treeSprites = [tree1, tree2]
@@ -33,6 +33,9 @@ const TREE_POSITIONS = [
   { x: '18%', y: '70%', size: 'xl' },
   { x: '88%', y: '14%', size: 'xl' },
 ]
+
+// Show these statuses on the forest — excludes completed + archived
+const ACTIVE_STATUSES = new Set(['active', 'pending'])
 
 function formatDate(isoStr) {
   if (!isoStr) return '—'
@@ -57,19 +60,26 @@ export default function Dashboard({ user: userProp }) {
 
   useEffect(() => {
     if (!user) return
+
+    // ── Use onSnapshot so new projects appear instantly without a refresh ──
     const q = query(collection(db, 'projects'), where('userId', '==', user.uid))
-    getDocs(q)
-      .then((snapshot) => {
+    const unsub = onSnapshot(q,
+      (snapshot) => {
         const all = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-        const active = all.filter(p => p.status !== 'archived' && p.status !== 'completed')
-        setProjects(active)
+
+        // Show active + pending; hide completed + archived
+        const visible = all.filter(p => ACTIVE_STATUSES.has(p.status))
+        setProjects(visible)
         setUserStreak(all.filter(p => p.status === 'completed').length || all.length)
         setLoading(false)
-      })
-      .catch((err) => {
-        console.error('Dashboard fetch error:', err)
+      },
+      (err) => {
+        console.error('Dashboard snapshot error:', err)
         setLoading(false)
-      })
+      }
+    )
+
+    return () => unsub()
   }, [user])
 
   return (
@@ -161,7 +171,7 @@ export default function Dashboard({ user: userProp }) {
             return (
               <div
                 key={project.id}
-                className={`tree tree--${pos.size} ${isHov ? 'tree--hovered' : ''}`}
+                className={`tree tree--${pos.size} ${isHov ? 'tree--hovered' : ''}${project.status === 'pending' ? ' tree--pending' : ''}`}
                 style={{ left: pos.x, top: pos.y }}
                 onMouseEnter={() => setHovered(project)}
                 onMouseLeave={() => setHovered(null)}
@@ -171,30 +181,21 @@ export default function Dashboard({ user: userProp }) {
                 aria-label={project.title || 'Project tree'}
                 onKeyDown={e => e.key === 'Enter' && navigate(`/treeview/${project.id}`)}
               >
-                {/* Floating tree sprite */}
                 <div className='tree__floater'>
                   <img className='tree__sprite' src={sprite} alt='' draggable={false} />
                 </div>
+                <img className='tree__base' src={frameBase} alt='' draggable={false} />
+                {isHov && <div className='tree__label'>{project.title}</div>}
 
-                {/* ✅ Frame.svg as the isometric base — replaces the CSS div */}
-                <img
-                  className='tree__base'
-                  src={frameBase}
-                  alt=''
-                  draggable={false}
-                />
-
-                {/* ✅ Shows project.title (not description) in Cormorant font via CSS */}
-                {isHov && (
-                  <div className='tree__label'>{project.title}</div>
-                )}
+                {/* Generating indicator for pending projects */}
+                {project.status === 'pending'}
               </div>
             )
           })
         )}
 
         {BUTTERFLIES.map((b) => (
-          <div key={b.id} className={`butterfly ${b.animClass}`} aria-hidden='true'>
+          <div key={b.id} className={`butterfl ${b.animClass}`} aria-hidden='true'>
             <img src={b.sprite} alt='' draggable={false} />
           </div>
         ))}

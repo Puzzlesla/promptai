@@ -1,4 +1,5 @@
 
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Nunito:wght@400;600;700;800;900&display=swap');
 
 /* ── CSS variables (shared with LogIn) ── */
@@ -52,8 +53,8 @@
 .dash__panel {
   position: relative;
   z-index: 10;
-  width: 250px;
-  min-width: 200px;
+  width: 200px;
+  min-width: 180px;
   flex-shrink: 0;
   background: var(--panel-bg);
   backdrop-filter: blur(16px);
@@ -362,6 +363,36 @@
 
 .tree--hovered .tree__base {
   filter: drop-shadow(0 6px 16px rgba(194,24,91,0.32)) brightness(1.06);
+}
+
+/* Pending / generating badge */
+.tree--pending .tree__sprite {
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.tree__pending-badge {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255,255,255,0.92);
+  border: 1px solid var(--panel-border);
+  color: var(--ink-muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 99px;
+  white-space: nowrap;
+  animation: pending-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pending-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
 }
 
 /* Hover label */

@@ -1,6 +1,4 @@
-/**
- * Organic tree trunk + numbered task nodes (linear order: index 0 = bottom step 1).
- */
+
 export function layoutTreePositions(count, width, height) {
   if (count === 0) return []
   const padY = 52
@@ -30,8 +28,8 @@ export default function ProjectTreeCanvas({
   linearTasks,
   completedIds,
   nextIndex,
-  isNodeInteractive,
-  onNodeActivate,
+  isNodeInteractive, // still used to style nodes, not to gate clicks
+  onNodeActivate,    // now = handleNodeSelect (opens detail panel)
 }) {
   const w = 360
   const h = 520
@@ -48,10 +46,19 @@ export default function ProjectTreeCanvas({
       >
         <defs>
           <linearGradient id="treeBranchGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#6b4f2a" />
-            <stop offset="100%" stopColor="#8b6914" />
+            <stop offset="0%" stopColor="#8B5E3C" />
+            <stop offset="100%" stopColor="#A0722A" />
           </linearGradient>
+          <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
+
+        {/* Branches */}
         {positions.length > 1 &&
           positions.slice(0, -1).map((p, i) => {
             const q = positions[i + 1]
@@ -67,40 +74,53 @@ export default function ProjectTreeCanvas({
               />
             )
           })}
+
+        {/* Nodes */}
         {linearTasks.map((node, i) => {
-          const p = positions[i]
+          const p        = positions[i]
           if (!p) return null
-          const stepNum = i + 1
-          const isDone = done.has(node.id)
+          const stepNum  = i + 1
+          const isDone   = done.has(node.id)
           const isCurrent = i === nextIndex && !isDone
-          const label = (node.data?.label || 'Task').slice(0, 42)
-          const canClick = isNodeInteractive ? isNodeInteractive(node.id) : false
+          // isInteractive still drives visual styling (pulse, opacity)
+          const isInteractive = isNodeInteractive ? isNodeInteractive(node.id) : false
+          const label    = (node.data?.label || 'Task').slice(0, 42)
+          const r        = isCurrent ? 26 : 22
 
           return (
-            <g key={node.id} className="tree-canvas__node-group">
+            <g
+              key={node.id}
+              className="tree-canvas__node-group"
+              filter={isCurrent ? 'url(#nodeGlow)' : undefined}
+            >
+              {/* White halo ring */}
               <circle
                 cx={p.x}
                 cy={p.y}
-                r={isCurrent ? 28 : 24}
+                r={r + 4}
                 className={`tree-canvas__node-ring${isCurrent ? ' tree-canvas__node-ring--current' : ''}`}
               />
+              {/* Filled node — dimmed if locked */}
               <circle
                 cx={p.x}
                 cy={p.y}
-                r={isCurrent ? 22 : 19}
-                className={`tree-canvas__node-fill${isDone ? ' tree-canvas__node-fill--done' : ''}`}
+                r={r}
+                className={`tree-canvas__node-fill${isDone ? ' tree-canvas__node-fill--done' : ''}${!isInteractive && !isDone ? ' tree-canvas__node-fill--locked' : ''}`}
               />
+              {/* Step number */}
               <text
                 x={p.x}
-                y={p.y + 6}
+                y={p.y + 5}
                 textAnchor="middle"
                 className="tree-canvas__node-num"
               >
                 {stepNum}
               </text>
+
+              {/* Label button — ALWAYS enabled, opens detail panel on click */}
               <foreignObject
                 x={p.x - 90}
-                y={p.y + 32}
+                y={p.y + r + 10}
                 width={180}
                 height={56}
                 xmlns="http://www.w3.org/1999/xhtml"
@@ -108,18 +128,9 @@ export default function ProjectTreeCanvas({
                 <div className="tree-canvas__label-wrap">
                   <button
                     type="button"
-                    className={`tree-canvas__label-btn${isCurrent ? ' tree-canvas__label-btn--pulse' : ''}`}
-                    onClick={() => canClick && onNodeActivate(node.id)}
-                    disabled={!canClick}
-                    title={
-                      canClick
-                        ? isDone
-                          ? 'Click to undo last step'
-                          : 'Mark this task complete'
-                        : isDone
-                          ? 'Completed'
-                          : 'Complete earlier tasks first'
-                    }
+                    className={`tree-canvas__label-btn${isCurrent ? ' tree-canvas__label-btn--pulse' : ''}${isDone ? ' tree-canvas__label-btn--done' : ''}`}
+                    onClick={() => onNodeActivate(node.id)}
+                    title="Tap to see steps"
                   >
                     {label}
                   </button>
